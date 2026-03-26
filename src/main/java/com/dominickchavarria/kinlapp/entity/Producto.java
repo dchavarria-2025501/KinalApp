@@ -4,18 +4,19 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "productos")
+@Table(name = "Productos")
 public class Producto {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_producto")
     private Long codigoProducto;
-    @Column
+    @Column(name = "nombre_producto", nullable = false)
     private String nombreProducto;
-    @Column
+    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal precio;
-    @Column
+    @Column(nullable = false)
     private Long stock;
-    @Column
+    @Column(nullable = false)
     private Long estado;
 
     public Producto() {
