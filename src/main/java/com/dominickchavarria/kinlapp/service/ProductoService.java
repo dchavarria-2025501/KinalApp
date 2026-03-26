@@ -27,78 +27,69 @@ public class ProductoService implements IProductoService {
 
     @Override
     public Producto guardar(Producto producto) {
-
         validarProducto(producto);
-
-        if (producto.getEstado() == 0) {
-            producto.setEstado(1);
+        if (producto.getEstado() == null) {
+            producto.setEstado(1L);
         }
-
         return productoRepository.save(producto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Producto> buscarPorId(String idProducto) {
-        return productoRepository.findById(idProducto);
+    public Optional<Producto> buscarPorId(Long codigoProducto) {
+        return productoRepository.findById(codigoProducto);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Producto> buscarActivos() {
-        return productoRepository.findByEstado(1);
+        return productoRepository.findByEstado(1L);
     }
 
     @Override
-    public Producto actualizar(String idProducto, Producto producto) {
-
-        if (!productoRepository.existsById(idProducto)) {
+    public Producto actualizar(
+            Long codigoProducto,
+            Producto producto) {
+        if (!productoRepository.existsById(codigoProducto)) {
             throw new RuntimeException(
-                    "El producto no se encontro con el ID " + idProducto);
+                    "El producto no se encontro con el codigo " + codigoProducto);
         }
-
-        producto.setIdProducto(idProducto);
-
+        producto.setCodigoProducto(codigoProducto);
         validarProducto(producto);
-
         return productoRepository.save(producto);
     }
 
     @Override
-    public void eliminar(String idProducto) {
-
-        if (!productoRepository.existsById(idProducto)) {
+    public void eliminar(Long codigoProducto) {
+        if (!productoRepository.existsById(codigoProducto)) {
             throw new RuntimeException(
                     "El producto no se encontro");
         }
-
-        productoRepository.deleteById(idProducto);
+        productoRepository.deleteById(codigoProducto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public boolean existePorId(String idProducto) {
-        return productoRepository.existsById(idProducto);
+    public boolean existePorId(Long codigoProducto) {
+        return productoRepository.existsById(codigoProducto);
     }
 
     private void validarProducto(Producto producto) {
-
-        if (producto.getIdProducto() == null ||
-                producto.getIdProducto().trim().isEmpty()) {
-
+        if (producto.getNombreProducto() == null ||
+                producto.getNombreProducto().trim().isEmpty()) {
             throw new IllegalArgumentException(
-                    "El ID del producto es obligatorio");
+                    "El nombre del producto es obligatorio");
         }
 
         if (producto.getPrecio() == null ||
-                producto.getPrecio().compareTo(BigDecimal.ZERO) <= 0) {
-
+                producto.getPrecio()
+                        .compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException(
                     "El precio debe ser mayor a 0");
         }
 
-        if (producto.getStock() < 0) {
-
+        if (producto.getStock() == null ||
+                producto.getStock() < 0) {
             throw new IllegalArgumentException(
                     "El stock no puede ser negativo");
         }
