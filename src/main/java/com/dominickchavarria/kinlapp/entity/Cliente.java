@@ -6,18 +6,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "Clientes")
 public class Cliente {
     @Id
-    @Column (name = "dpi_cliente")
+    @Column(name = "dpi_cliente")
     private String DPICliente;
-    @Column
+    @Column(name = "nombre_cliente", nullable = false)
     private String nombreCliente;
-    @Column
+    @Column(name = "apellido_cliente", nullable = false)
     private String apellidoCliente;
-    @Column
+    @Column(nullable = false)
     private String direccion;
-    @Column
+    @Column(nullable = false)
     private int estado;
 
     public Cliente() {
