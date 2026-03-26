@@ -9,106 +9,64 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RestController = @Controller + @RequestBody
 @RequestMapping("/productos")
-// Todas las rutas de este controlador empiezan con /productos
-public class ProductoController{
-    // Inyección del servicio
-    //El controlador solo debe tener conexion con el Servicio
+public class ProductoController {
+
     private final IProductoService productoService;
 
-    public ProductoController(IProductoService productoService){
+    public ProductoController(
+            IProductoService productoService) {
         this.productoService = productoService;
     }
 
-    //Peticiones GET
     @GetMapping
-    public ResponseEntity<List<Producto>> listar(){
-        List<Producto> productos = productoService.listarTodos();
-        return ResponseEntity.ok(productos);
-        //200 OK con la lista de productos
+    public ResponseEntity<List<Producto>> listar() {
+        return ResponseEntity.ok(
+                productoService.listarTodos());
     }
 
-    //{idProducto} variable de ruta(valor a buscar)
-    @GetMapping("/{idProducto}")
-    public ResponseEntity<Producto> buscarPorId(@PathVariable String idProducto){
-        //@PathVariable Toma el valor de la URL y lo asigna al idProducto
-        return productoService.buscarPorId(idProducto)
+    @GetMapping("/{codigoProducto}")
+    public ResponseEntity<Producto> buscarPorId(@PathVariable Long codigoProducto) {
+        return productoService
+                .buscarPorId(codigoProducto)
                 .map(ResponseEntity::ok)
-                //Si Optional esta vacio, devuelve 404 NOT FOUND
                 .orElse(ResponseEntity.notFound().build());
-        // 200 OK o 404 NOT FOUND
     }
 
-    //{activos} es una variable de ruta(valor a buscar)
     @GetMapping("/activos")
-    public ResponseEntity<List<Producto>> buscarActivos(){
-        List<Producto> productosActivos = productoService.buscarActivos();
-        if(productosActivos.isEmpty()){
+    public ResponseEntity<List<Producto>> buscarActivos() {
+        List<Producto> productos = productoService.buscarActivos();
+        if (productos.isEmpty()) {
             return ResponseEntity.noContent().build();
-            // 204 NO CONTENT
         }
-        return ResponseEntity.ok(productosActivos);
-        // 200 OK
+        return ResponseEntity.ok(productos);
     }
 
-    // POST - crear un nuevo producto
     @PostMapping
-    public ResponseEntity<?> guardar(@RequestBody Producto producto){
-        //@RequestBody: Toma el JSON del cuerpo y lo convierte a un objeto de tipo Producto
-        //<?> significa "tipo generico" puede ser un Producto o un String
-        try{
-            Producto nuevoProducto = productoService.guardar(producto);
-            //Intentamos guardar el producto pero puede lanzar una Excepcion
-            // de IllegalArgumentException
-            return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
-            // 201 CREATED
-        }catch (IllegalArgumentException e){
-            //si hay error de validacion
-            // 400 BAD REQUEST
+    public ResponseEntity<?> guardar(@RequestBody Producto producto) {
+        try {
+            Producto nuevo = productoService.guardar(producto);
+            return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    // DELETE - eliminar producto
-    @DeleteMapping("/{idProducto}")
-    public ResponseEntity<Void> eliminar(@PathVariable String idProducto){
-        //ResponseEntity<Void>: No devuelve cuerpo en la respuesta
-        try{
-            if(!productoService.existePorId(idProducto)){
-                return ResponseEntity.notFound().build();
-                //404 NOT FOUND
-            }
-            productoService.eliminar(idProducto);
-            return ResponseEntity.noContent().build();
-            //204 NO CONTENT (Se ejecuto correctamente y no devuelve cuerpo)
-        }catch (RuntimeException e){
+    @PutMapping("/{codigoProducto}")
+    public ResponseEntity<?> actualizar(@PathVariable Long codigoProducto, @RequestBody Producto producto) {
+        if (!productoService.existePorId(codigoProducto)){
             return ResponseEntity.notFound().build();
-            //404 NOT FOUND
         }
+        Producto actualizado = productoService.actualizar(codigoProducto, producto);
+        return ResponseEntity.ok(actualizado);
     }
 
-    //Actualizar producto a traves de idProducto
-    @PutMapping("/{idProducto}")
-    public ResponseEntity<?> actualizar(@PathVariable String idProducto, @RequestBody Producto producto){
-        try{
-            if(!productoService.existePorId(idProducto)){
-                //Verificar si existe antes de poder actualizar
-                return ResponseEntity.notFound().build();
-                //404 NOT FOUND
-            }
-            //Actualizamos el producto pero esto puede lanzar una excepcion
-            Producto productoActualizado = productoService.actualizar(idProducto, producto);
-            return ResponseEntity.ok(productoActualizado);
-            //200 OK con el cliente ya actualizado
-        }catch (IllegalArgumentException e){
-            //Error cuando los datos sean incorrectos
-            //400 BAD REQUEST
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }catch (RuntimeException e){
-            //Posiblemente cualquier otro error como: No Encontrado, etc.
-            //404 NOT FOUND
+    @DeleteMapping("/{codigoProducto}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long codigoProducto) {
+        if (!productoService.existePorId(codigoProducto)){
             return ResponseEntity.notFound().build();
         }
+        productoService.eliminar(codigoProducto);
+        return ResponseEntity.noContent().build();
     }
 }
