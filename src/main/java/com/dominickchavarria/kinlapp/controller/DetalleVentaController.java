@@ -33,7 +33,7 @@ public class DetalleVentaController {
     public ResponseEntity<DetalleVenta> guardar(@RequestBody DetalleVenta detalleVenta){
         return ResponseEntity.ok(detalleVentaService.guardar(detalleVenta));
     }
-    
+
     @DeleteMapping("/{codigoDetalleVenta}")
     public ResponseEntity<Void> eliminar(@PathVariable Long codigoDetalleVenta){
         detalleVentaService.eliminar(codigoDetalleVenta);

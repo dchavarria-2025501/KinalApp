@@ -5,27 +5,27 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "ventas")
+@Table(name = "Ventas")
 public class Venta{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_venta")
     private Long codigoVenta;
-    @Column(name = "fecha_venta")
+    @Column(nullable = false)
     private LocalDate fechaVenta;
-    @Column
+    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal total;
-    @Column
+    @Column(nullable = false)
     private Long estado;
 
-    // RELACION con Cliente
-    @ManyToOne
-    @JoinColumn(name = "Clientes_dpi_cliente")
+    // RELACION con CLIENTES
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "clientes_dpi_cliente", nullable = false)
     private Cliente cliente;
 
-    // RELACION con Usuario
-    @ManyToOne
-    @JoinColumn(name = "Usuarios_codigo_usuario")
+    //  RELACION con USUARIOS
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "usuarios_codigo_usuario", nullable = false)
     private Usuario usuario;
 
     public Venta(){
