@@ -11,7 +11,7 @@ public interface IDetalleVentaService {
     DetalleVenta guardar(DetalleVenta detalleVenta);
 
     Optional<DetalleVenta> buscarPorId(Long codigoDetalleVenta);
-    
+
     List<DetalleVenta> buscarPorVenta(Long codigoVenta);
 
     DetalleVenta actualizar(Long codigoDetalleVenta, DetalleVenta detalleVenta);
