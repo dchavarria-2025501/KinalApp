@@ -11,13 +11,13 @@ public interface IProductoService {
 
     Producto guardar(Producto producto);
 
-    Optional<Producto> buscarPorId(int codigoProducto);
+    Optional<Producto> buscarPorId(Long codigoProducto);
 
     List<Producto> buscarActivos();
 
-    Producto actualizar(int codigoProducto, Producto producto);
+    Producto actualizar(Long codigoProducto, Producto producto);
 
-    void eliminar(int codigoProducto);
+    void eliminar(Long codigoProducto);
 
-    boolean existePorId(int codigoProducto);
+    boolean existePorId(Long codigoProducto);
 }
