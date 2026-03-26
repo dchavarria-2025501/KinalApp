@@ -11,21 +11,21 @@ public class DetalleVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_detalle_venta")
     private Long codigoDetalleVenta;
-    @Column
+    @Column(nullable = false)
     private Long cantidad;
-    @Column(name = "precio_unitario")
+    @Column(name = "precio_unitario", precision = 10, scale = 2, nullable = false)
     private BigDecimal precioUnitario;
-    @Column
+    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal subtotal;
 
-    //RELACION con Producto
-    @ManyToOne
-    @JoinColumn(name = "Productos_codigo_producto")
+    // RELACION con PRODUCTOS
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "productos_codigo_producto", nullable = false)
     private Producto producto;
 
-    //RELACION con Venta
-    @ManyToOne
-    @JoinColumn(name = "Ventas_codigo_venta")
+    // RELACION con VENTAS
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ventas_codigo_venta", nullable = false)
     private Venta venta;
 
     public DetalleVenta(){
