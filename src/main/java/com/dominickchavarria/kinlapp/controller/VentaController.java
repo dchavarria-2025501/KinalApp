@@ -38,7 +38,7 @@ public class VentaController {
     public ResponseEntity<Venta> actualizar(@PathVariable Long codigoVenta, @RequestBody Venta venta){
         return ResponseEntity.ok(ventaService.actualizar(codigoVenta, venta));
     }
-    
+
     @DeleteMapping("/{codigoVenta}")
     public ResponseEntity<Void> eliminar(@PathVariable Long codigoVenta){
         ventaService.eliminar(codigoVenta);
