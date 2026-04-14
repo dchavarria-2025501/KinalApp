@@ -31,6 +31,7 @@ public class ClienteViewController {
         return "cliente-form";
     }
 
+    //metodo guardar
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("cliente") Cliente cliente) {
         clienteService.guardar(cliente);
