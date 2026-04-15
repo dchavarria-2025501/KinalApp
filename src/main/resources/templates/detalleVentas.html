@@ -1,50 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Ventas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Ventas - Sistema de Gestión</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-light">
-
-<div class="container mt-5">
-
-    <h1 class="text-center mb-4">Detalle de Ventas</h1>
-
-    <div class="mb-3 text-end">
-        <a th:href="@{/vista/detalleVentas/nuevo}" class="btn btn-primary">
-            Nuevo Detalle
-        </a>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">🏪 SistemaGestión</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">📊 Dashboard</a>
+            <a href="clientes.html" class="nav-link">👥 Clientes</a>
+            <a href="productos.html" class="nav-link">📦 Productos</a>
+            <a href="ventas.html" class="nav-link">💰 Ventas</a>
+            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+        </div>
     </div>
+</nav>
+
+<div class="container">
+    <a href="ventas.html" class="back-button">← Regresar a Ventas</a>
 
     <div class="card">
-        <div class="card-header bg-dark text-white">
-            Lista de Detalles
+        <div class="card-header">
+            <h2 class="card-title">📋 Detalle de Ventas</h2>
+            <a href="detalleVenta-form.html" class="btn btn-primary">➕ Añadir Detalle</a>
         </div>
 
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead class="table-dark">
+        <div class="table-container">
+            <table>
+                <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID Detalle</th>
+                    <th>ID Venta</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                <tr th:each="d : ${detalleVentas}">
-                    <td th:text="${d.id}"></td>
-                    <td th:text="${d.cantidad}"></td>
-                    <td th:text="${d.precio}"></td>
+                <tr>
+                    <td>1</td>
+                    <td>V001</td>
+                    <td>Laptop Pro</td>
+                    <td>1</td>
+                    <td>$1,299</td>
+                    <td>$1,299</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>V001</td>
+                    <td>Mouse Inalámbrico</td>
+                    <td>2</td>
+                    <td>$29</td>
+                    <td>$58</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>V002</td>
+                    <td>Teclado Mecánico</td>
+                    <td>1</td>
+                    <td>$89</td>
+                    <td>$89</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
                 </tr>
                 </tbody>
-
             </table>
         </div>
     </div>
-
 </div>
 
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h2 class="modal-title">Demostración</h2>
+        <p class="modal-text">Los botones de Editar y Eliminar son demostrativos. En una versión real, estas funciones estarían disponibles.</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showWarning() { document.getElementById('warningModal').classList.add('show'); }
+    function closeModal() { document.getElementById('warningModal').classList.remove('show'); }
+    window.onclick = function(event) { const modal = document.getElementById('warningModal'); if (event.target === modal) closeModal(); }
+</script>
 </body>
 </html>

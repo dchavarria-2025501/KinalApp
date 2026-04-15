@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Usuario - Sistema de Gestión</title>
+    <title>Añadir Cliente - Sistema de Gestión</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,47 +21,42 @@
 </nav>
 
 <div class="container">
-    <a href="usuarios.html" class="back-button">← Regresar a Usuarios</a>
+    <a href="clientes.html" class="back-button">← Regresar a Clientes</a>
 
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">➕ Añadir Nuevo Usuario</h2>
+            <h2 class="card-title">➕ Añadir Nuevo Cliente</h2>
         </div>
 
-        <form id="usuarioForm" onsubmit="showSuccess(event)">
+        <form id="clienteForm" onsubmit="showSuccess(event)">
             <div class="form-group">
-                <label>Nombre de Usuario *</label>
-                <input type="text" required placeholder="usuario123">
+                <label>Nombre Completo *</label>
+                <input type="text" required placeholder="Ej: María García López">
             </div>
 
             <div class="form-group">
                 <label>Email *</label>
-                <input type="email" required placeholder="usuario@email.com">
+                <input type="email" required placeholder="cliente@email.com">
             </div>
 
             <div class="form-group">
-                <label>Contraseña *</label>
-                <input type="password" required placeholder="********">
+                <label>Teléfono *</label>
+                <input type="tel" required placeholder="555-0101">
             </div>
 
             <div class="form-group">
-                <label>Confirmar Contraseña *</label>
-                <input type="password" required placeholder="********">
+                <label>Dirección</label>
+                <textarea rows="3" placeholder="Dirección completa"></textarea>
             </div>
 
             <div class="form-group">
-                <label>Rol *</label>
-                <select required>
-                    <option value="">Seleccionar rol</option>
-                    <option>Administrador</option>
-                    <option>Vendedor</option>
-                    <option>Almacén</option>
-                </select>
+                <label>Fecha de Nacimiento</label>
+                <input type="date">
             </div>
 
             <div style="display: flex; gap: 1rem; justify-content: flex-end;">
-                <button type="button" class="btn btn-secondary" onclick="location.href='usuarios.html'">Cancelar</button>
-                <button type="submit" class="btn btn-primary">💾 Guardar Usuario</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='clientes.html'">Cancelar</button>
+                <button type="submit" class="btn btn-primary">💾 Guardar Cliente</button>
             </div>
         </form>
     </div>
@@ -70,10 +65,10 @@
 <div id="successModal" class="modal">
     <div class="modal-content">
         <div class="modal-icon">✅</div>
-        <h2 class="modal-title">¡Usuario agregado!</h2>
-        <p class="modal-text">El usuario ha sido registrado exitosamente (demostración).</p>
+        <h2 class="modal-title">¡Cliente agregado!</h2>
+        <p class="modal-text">El cliente ha sido registrado exitosamente (demostración).</p>
         <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="redirectToUsuarios()">Aceptar</button>
+            <button class="btn btn-primary" onclick="redirectToClientes()">Aceptar</button>
         </div>
     </div>
 </div>
@@ -83,8 +78,11 @@
         event.preventDefault();
         document.getElementById('successModal').classList.add('show');
     }
-    function redirectToUsuarios() {
-        window.location.href = 'usuarios.html';
+    function redirectToClientes() {
+        window.location.href = 'clientes.html';
+    }
+    function closeModal() {
+        document.getElementById('successModal').classList.remove('show');
     }
 </script>
 </body>

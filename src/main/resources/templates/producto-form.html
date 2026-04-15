@@ -1,28 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Formulario Producto</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Producto - Sistema de Gestión</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<h1>Nuevo Producto</h1>
-<form th:action="@{/vista/productos/guardar}" th:object="${producto}" method="post">
-    <label>Nombre:</label>
-    <input type="text" th:field="*{nombre}">
-    <br><br>
-    <label>Precio:</label>
-    <input type="number" step="0.01" th:field="*{precio}">
-    <br><br>
-    <label>Stock:</label>
-    <input type="number" th:field="*{stock}">
-    <br><br>
-    <button type="submit">
-        Guardar
-    </button>
-</form>
-<br>
-<a th:href="@{/vista/productos}">
-    Regresar
-</a>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">🏪 SistemaGestión</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">📊 Dashboard</a>
+            <a href="clientes.html" class="nav-link">👥 Clientes</a>
+            <a href="productos.html" class="nav-link">📦 Productos</a>
+            <a href="ventas.html" class="nav-link">💰 Ventas</a>
+            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <a href="productos.html" class="back-button">← Regresar a Productos</a>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">➕ Añadir Nuevo Producto</h2>
+        </div>
+
+        <form id="productoForm" onsubmit="showSuccess(event)">
+            <div class="form-group">
+                <label>Nombre del Producto *</label>
+                <input type="text" required placeholder="Ej: Laptop Gaming">
+            </div>
+
+            <div class="form-group">
+                <label>Categoría *</label>
+                <select required>
+                    <option value="">Seleccionar categoría</option>
+                    <option>Electrónica</option>
+                    <option>Accesorios</option>
+                    <option>Ropa</option>
+                    <option>Hogar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Precio *</label>
+                <input type="number" step="0.01" required placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+                <label>Cantidad en Stock *</label>
+                <input type="number" required placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea rows="3" placeholder="Descripción del producto"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="location.href='productos.html'">Cancelar</button>
+                <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">✅</div>
+        <h2 class="modal-title">¡Producto agregado!</h2>
+        <p class="modal-text">El producto ha sido registrado exitosamente (demostración).</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="redirectToProductos()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSuccess(event) {
+        event.preventDefault();
+        document.getElementById('successModal').classList.add('show');
+    }
+    function redirectToProductos() {
+        window.location.href = 'productos.html';
+    }
+</script>
 </body>
 </html>

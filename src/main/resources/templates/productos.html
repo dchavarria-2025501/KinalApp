@@ -1,32 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Productos</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Sistema de Gestión</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<h1>Lista de Productos</h1>
-<a th:href="@{/vista/productos/nuevo}">
-    <button>Nuevo Producto</button>
-</a>
-<br><br>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Stock</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="producto : ${productos}">
-        <td th:text="${producto.id}"></td>
-        <td th:text="${producto.nombre}"></td>
-        <td th:text="${producto.precio}"></td>
-        <td th:text="${producto.stock}"></td>
-    </tr>
-    </tbody>
-</table>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">🏪 SistemaGestión</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">📊 Dashboard</a>
+            <a href="clientes.html" class="nav-link">👥 Clientes</a>
+            <a href="productos.html" class="nav-link">📦 Productos</a>
+            <a href="ventas.html" class="nav-link">💰 Ventas</a>
+            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <a href="index.html" class="back-button">← Regresar al Dashboard</a>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">📦 Gestión de Productos</h2>
+            <a href="producto-form.html" class="btn btn-primary">➕ Añadir Producto</a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>Laptop Pro</td>
+                    <td>Electrónica</td>
+                    <td>$1,299</td>
+                    <td>15</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Mouse Inalámbrico</td>
+                    <td>Accesorios</td>
+                    <td>$29</td>
+                    <td>50</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>103</td>
+                    <td>Teclado Mecánico</td>
+                    <td>Accesorios</td>
+                    <td>$89</td>
+                    <td>30</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h2 class="modal-title">Función en demostración</h2>
+        <p class="modal-text">Editar y Eliminar son botones de demostración. En producción, estas acciones estarían disponibles.</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showWarning() { document.getElementById('warningModal').classList.add('show'); }
+    function closeModal() { document.getElementById('warningModal').classList.remove('show'); }
+    window.onclick = function(event) { const modal = document.getElementById('warningModal'); if (event.target === modal) closeModal(); }
+</script>
 </body>
 </html>

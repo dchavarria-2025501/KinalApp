@@ -1,26 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Formulario Venta</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Venta - Sistema de Gestión</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">🏪 SistemaGestión</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">📊 Dashboard</a>
+            <a href="clientes.html" class="nav-link">👥 Clientes</a>
+            <a href="productos.html" class="nav-link">📦 Productos</a>
+            <a href="ventas.html" class="nav-link">💰 Ventas</a>
+            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+        </div>
+    </div>
+</nav>
 
-<h1>Nueva Venta</h1>
-<form th:action="@{/vista/ventas/guardar}" th:object="${venta}" method="post">
-    <label>Fecha:</label>
-    <input type="date" th:field="*{fecha}">
-    <br><br>
-    <label>Total:</label>
-    <input type="number" step="0.01" th:field="*{total}">
-    <br><br>
-    <button type="submit">
-        Guardar
-    </button>
-</form>
-<br>
-<a th:href="@{/vista/ventas}">
-    Regresar
-</a>
+<div class="container">
+    <a href="ventas.html" class="back-button">← Regresar a Ventas</a>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💰 Registrar Nueva Venta</h2>
+        </div>
+
+        <form id="ventaForm" onsubmit="showSuccess(event)">
+            <div class="form-group">
+                <label>Cliente *</label>
+                <select required>
+                    <option value="">Seleccionar cliente</option>
+                    <option>María García</option>
+                    <option>Juan Pérez</option>
+                    <option>Ana López</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Producto *</label>
+                <select required>
+                    <option value="">Seleccionar producto</option>
+                    <option>Laptop Pro - $1,299</option>
+                    <option>Mouse Inalámbrico - $29</option>
+                    <option>Teclado Mecánico - $89</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Cantidad *</label>
+                <input type="number" required placeholder="1">
+            </div>
+
+            <div class="form-group">
+                <label>Método de Pago</label>
+                <select>
+                    <option>Efectivo</option>
+                    <option>Tarjeta de Crédito</option>
+                    <option>Transferencia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Observaciones</label>
+                <textarea rows="3" placeholder="Notas adicionales..."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="location.href='ventas.html'">Cancelar</button>
+                <button type="submit" class="btn btn-primary">💾 Registrar Venta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">✅</div>
+        <h2 class="modal-title">¡Venta registrada!</h2>
+        <p class="modal-text">La venta ha sido registrada exitosamente (demostración).</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="redirectToVentas()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSuccess(event) {
+        event.preventDefault();
+        document.getElementById('successModal').classList.add('show');
+    }
+    function redirectToVentas() {
+        window.location.href = 'ventas.html';
+    }
+</script>
 </body>
 </html>

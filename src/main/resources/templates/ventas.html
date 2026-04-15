@@ -1,31 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
-    <title>Ventas</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - Sistema de Gestión</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">🏪 SistemaGestión</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">📊 Dashboard</a>
+            <a href="clientes.html" class="nav-link">👥 Clientes</a>
+            <a href="productos.html" class="nav-link">📦 Productos</a>
+            <a href="ventas.html" class="nav-link">💰 Ventas</a>
+            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+        </div>
+    </div>
+</nav>
 
-<h1>Lista de Ventas</h1>
-<a th:href="@{/vista/ventas/nuevo}">
-    <button>Nueva Venta</button>
-</a>
-<br><br>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Fecha</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="venta : ${ventas}">
-        <td th:text="${venta.id}"></td>
-        <td th:text="${venta.fecha}"></td>
-        <td th:text="${venta.total}"></td>
-    </tr>
-    </tbody>
-</table>
+<div class="container">
+    <a href="index.html" class="back-button">← Regresar al Dashboard</a>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">💰 Historial de Ventas</h2>
+            <a href="venta-form.html" class="btn btn-primary">➕ Nueva Venta</a>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID Venta</th>
+                    <th>Cliente</th>
+                    <th>Productos</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#V001</td>
+                    <td>María García</td>
+                    <td>2 productos</td>
+                    <td>$1,250</td>
+                    <td>2024-01-15</td>
+                    <td>Completada</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#V002</td>
+                    <td>Juan Pérez</td>
+                    <td>3 productos</td>
+                    <td>$890</td>
+                    <td>2024-01-14</td>
+                    <td>Completada</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#V003</td>
+                    <td>Ana López</td>
+                    <td>5 productos</td>
+                    <td>$2,100</td>
+                    <td>2024-01-13</td>
+                    <td>Pendiente</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="showWarning()">✏️ Editar</button>
+                        <button class="btn btn-danger" onclick="showWarning()">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h2 class="modal-title">Demostración</h2>
+        <p class="modal-text">Los botones de Editar y Eliminar son demostrativos. En una versión real, estas funciones estarían disponibles.</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showWarning() { document.getElementById('warningModal').classList.add('show'); }
+    function closeModal() { document.getElementById('warningModal').classList.remove('show'); }
+    window.onclick = function(event) { const modal = document.getElementById('warningModal'); if (event.target === modal) closeModal(); }
+</script>
 </body>
 </html>
