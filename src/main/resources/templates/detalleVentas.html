@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle Ventas</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Lista de Detalle Ventas</h1>
+<a th:href="@{/vista/detalle-ventas/nuevo}">
+    <button>Nuevo Detalle</button>
+</a>
+<br><br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="detalle : ${detalleVentas}">
+        <td th:text="${detalle.id}"></td>
+        <td th:text="${detalle.cantidad}"></td>
+        <td th:text="${detalle.precio}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
