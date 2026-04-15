@@ -2,116 +2,202 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema Gestión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Sin JS</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión - Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        :root {
+            --primary: #4361ee;
+            --bg-body: #f4f7fe;
+        }
+
+        body { background-color: var(--bg-body); font-family: 'sans-serif'; }
+
+        /* --- Navbar Personalizada (Sin JS para el colapso) --- */
+        .custom-nav {
+            background: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .nav-links-css {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links-css a {
+            text-decoration: none;
+            color: #6c757d;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links-css a:hover { color: var(--primary); }
+
+        /* --- Estilo de Tarjetas --- */
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* --- El "Modal" usando solo CSS (:target) --- */
+        .modal-css {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Cuando el ID en la URL coincide con el ID del modal, se muestra */
+        .modal-css:target {
+            display: flex;
+        }
+
+        .modal-content-css {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .btn-close-css {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            text-decoration: none;
+            color: #000;
+            font-size: 1.5rem;
+        }
+
+        .bg-light-blue { background: #e7eafc; color: #4361ee; }
+        .bg-light-green { background: #e1fcef; color: #0fa661; }
+    </style>
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="logo">🏪 SistemaGestión</a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">📊 Dashboard</a>
-            <a href="clientes.html" class="nav-link">👥 Clientes</a>
-            <a href="productos.html" class="nav-link">📦 Productos</a>
-            <a href="ventas.html" class="nav-link">💰 Ventas</a>
-            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
-        </div>
+
+<header class="custom-nav">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="#" class="fw-bold text-primary text-decoration-none fs-4">🏪 SistemaGestión</a>
+        <nav class="nav-links-css d-none d-md-flex">
+            <a href="#">Dashboard</a>
+            <a href="#">Clientes</a>
+            <a href="#">Productos</a>
+            <a href="#">Ventas</a>
+        </nav>
     </div>
-</nav>
+</header>
 
 <div class="container">
-    <div class="alert alert-info">
-        ℹ️ Bienvenido al Sistema de Gestión - Los botones de Eliminar y Editar muestran una advertencia (no son funcionales)
-    </div>
-
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div style="font-size: 2rem;">👥</div>
-            <div class="stat-number">156</div>
-            <div>Clientes Registrados</div>
+    <div class="row g-4 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="icon-box bg-light-blue"><i class="bi bi-people"></i></div>
+                <div class="h4 fw-bold mb-0">156</div>
+                <small class="text-muted">Clientes</small>
+            </div>
         </div>
-        <div class="stat-card">
-            <div style="font-size: 2rem;">📦</div>
-            <div class="stat-number">342</div>
-            <div>Productos en Stock</div>
-        </div>
-        <div class="stat-card">
-            <div style="font-size: 2rem;">💰</div>
-            <div class="stat-number">$45,231</div>
-            <div>Ventas del Mes</div>
-        </div>
-        <div class="stat-card">
-            <div style="font-size: 2rem;">👤</div>
-            <div class="stat-number">8</div>
-            <div>Usuarios Activos</div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="icon-box bg-light-green"><i class="bi bi-currency-dollar"></i></div>
+                <div class="h4 fw-bold mb-0">$45k</div>
+                <small class="text-muted">Ingresos</small>
+            </div>
         </div>
     </div>
 
-    <div class="grid">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Acciones Rápidas</h2>
-            </div>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="cliente-form.html" class="btn btn-primary">➕ Nuevo Cliente</a>
-                <a href="producto-form.html" class="btn btn-primary">📦 Nuevo Producto</a>
-                <a href="venta-form.html" class="btn btn-success">💰 Nueva Venta</a>
-                <a href="usuario-form.html" class="btn btn-primary">👤 Nuevo Usuario</a>
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold">Ventas Recientes</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Monto</th>
+                            <th class="text-end">Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>María García</td>
+                            <td class="fw-bold">$1,250</td>
+                            <td class="text-end">
+                                <a href="#warningModal" class="btn btn-sm btn-light text-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td class="fw-bold">$890</td>
+                            <td class="text-end">
+                                <a href="#warningModal" class="btn btn-sm btn-light text-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Últimas Ventas</h2>
-                <a href="ventas.html" class="btn btn-outline">Ver todas →</a>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                    <tr><th>ID</th><th>Cliente</th><th>Total</th><th>Fecha</th></tr>
-                    </thead>
-                    <tbody>
-                    <tr><td>#001</td><td>María García</td><td>$1,250</td><td>2024-01-15</td></tr>
-                    <tr><td>#002</td><td>Juan Pérez</td><td>$890</td><td>2024-01-14</td></tr>
-                    <tr><td>#003</td><td>Ana López</td><td>$2,100</td><td>2024-01-13</td></tr>
-                    </tbody>
-                </table>
+        <div class="col-md-4">
+            <div class="stat-card h-100">
+                <h5 class="fw-bold mb-4">Acciones Rápidas</h5>
+                <div class="d-grid gap-3">
+                    <a href="#warningModal" class="btn btn-primary py-2">
+                        <i class="bi bi-plus-lg me-2"></i> Nuevo Cliente
+                    </a>
+                    <a href="#warningModal" class="btn btn-outline-dark py-2">
+                        <i class="bi bi-file-earmark-pdf me-2"></i> Reporte Diario
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="warningModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-icon">⚠️</div>
-        <h2 class="modal-title">Botón no funcional</h2>
-        <p class="modal-text">Este botón es solo para demostración. En una versión real, aquí se realizaría la acción correspondiente.</p>
-        <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="closeModal()">Entendido</button>
+<div id="warningModal" class="modal-css">
+    <div class="modal-content-css shadow-lg">
+        <a href="#" class="btn-close-css">&times;</a>
+        <div class="text-warning display-4 mb-3">
+            <i class="bi bi-exclamation-circle"></i>
         </div>
+        <h4 class="fw-bold">Acción No Disponible</h4>
+        <p class="text-muted">Esta interfaz es una maqueta estática. Para habilitar esta función se requiere un backend (PHP, Python, etc).</p>
+        <a href="#" class="btn btn-dark px-4 rounded-pill">Entendido</a>
     </div>
 </div>
 
-<script>
-    function showWarning() {
-        document.getElementById('warningModal').classList.add('show');
-    }
-    function closeModal() {
-        document.getElementById('warningModal').classList.remove('show');
-    }
-    window.onclick = function(event) {
-        const modal = document.getElementById('warningModal');
-        if (event.target === modal) closeModal();
-    }
-</script>
 </body>
 </html>
