@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/vista/detalle-ventas")
+@RequestMapping("/vista/detalleVentas")
 public class DetalleVentaViewController {
 
     private final IDetalleVentaService detalleVentaService;
@@ -19,18 +19,18 @@ public class DetalleVentaViewController {
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("detalleVentas", detalleVentaService.listarTodos());
-        return "detalle-ventas";
+        return "detalleVentas";
     }
 
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("detalleVenta", new DetalleVenta());
-        return "detalle-venta-form";
+        return "detalleVenta-form";
     }
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("detalleVenta") DetalleVenta detalleVenta) {
         detalleVentaService.guardar(detalleVenta);
-        return "redirect:/vista/detalle-ventas";
+        return "redirect:/vista/detalleVentas";
     }
 }
