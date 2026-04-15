@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario Detalle Venta</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Nuevo Detalle Venta</h1>
+<form th:action="@{/vista/detalle-ventas/guardar}" th:object="${detalleVenta}" method="post">
+    <label>Cantidad:</label>
+    <input type="number" th:field="*{cantidad}">
+    <br><br>
+    <label>Precio:</label>
+    <input type="number" step="0.01" th:field="*{precio}">
+    <br><br>
+    <button type="submit">
+        Guardar
+    </button>
+</form>
+<br>
+<a th:href="@{/vista/detalle-ventas}">
+    Regresar
+</a>
+</body>
+</html>
