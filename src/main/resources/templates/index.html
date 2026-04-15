@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>KinalApp</title>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+
+<h1>Sistema KinalApp</h1>
+
+<h2>Menú Principal</h2>
+
+<br>
+
+<a th:href="@{/vista/clientes}">
+    <button>Clientes</button>
+</a>
+
+<br><br>
+
+<a th:href="@{/vista/productos}">
+    <button>Productos</button>
+</a>
+
+<br><br>
+
+<a th:href="@{/vista/usuarios}">
+    <button>Usuarios</button>
+</a>
+
+<br><br>
+
+<a th:href="@{/vista/ventas}">
+    <button>Ventas</button>
+</a>
+
+<br><br>
+
+<a th:href="@{/vista/detalle-ventas}">
+    <button>Detalle Ventas</button>
+</a>
 
 </body>
 </html>
