@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Formulario Detalle Venta</title>
     <meta charset="UTF-8">
+    <title>Nuevo Detalle Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<h1>Nuevo Detalle Venta</h1>
-<form th:action="@{/vista/detalle-ventas/guardar}" th:object="${detalleVenta}" method="post">
-    <label>Cantidad:</label>
-    <input type="number" th:field="*{cantidad}">
-    <br><br>
-    <label>Precio:</label>
-    <input type="number" step="0.01" th:field="*{precio}">
-    <br><br>
-    <button type="submit">
-        Guardar
-    </button>
-</form>
-<br>
-<a th:href="@{/vista/detalle-ventas}">
-    Regresar
-</a>
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Agregar Detalle Venta</h1>
+
+    <div class="card">
+        <div class="card-body">
+
+            <form th:action="@{/vista/detalleVentas/guardar}" method="post">
+
+                <div class="mb-3">
+                    <label>Cantidad</label>
+                    <input type="number" name="cantidad" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Precio</label>
+                    <input type="number" step="0.01" name="precio" class="form-control" required>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a th:href="@{/vista/detalleVentas}" class="btn btn-secondary">Cancelar</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
