@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ventas</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h1>Lista de Ventas</h1>
+<a th:href="@{/vista/ventas/nuevo}">
+    <button>Nueva Venta</button>
+</a>
+<br><br>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="venta : ${ventas}">
+        <td th:text="${venta.id}"></td>
+        <td th:text="${venta.fecha}"></td>
+        <td th:text="${venta.total}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
