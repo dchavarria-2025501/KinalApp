@@ -17,6 +17,7 @@ public class ProductoViewController {
         this.productoService = productoService;
     }
 
+    //GetMapping - Listar
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("productos", productoService.listarTodos());
