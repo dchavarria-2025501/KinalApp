@@ -19,4 +19,6 @@ public interface IUsuarioService{
     void eliminar(Long codigoUsuario);
 
     boolean existePorId(Long codigoUsuario);
+
+    Optional<Usuario> buscarPorUsername(String username);
 }

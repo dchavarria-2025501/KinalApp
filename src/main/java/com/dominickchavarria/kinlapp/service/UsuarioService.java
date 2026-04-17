@@ -2,6 +2,7 @@ package com.dominickchavarria.kinlapp.service;
 
 import com.dominickchavarria.kinlapp.entity.Usuario;
 import com.dominickchavarria.kinlapp.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -59,6 +60,12 @@ public class UsuarioService implements IUsuarioService{
             throw new RuntimeException("El usuario no se encontro");
         }
         usuarioRepository.deleteById(codigoUsuario);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Usuario> buscarPorUsername(String username){
+        return usuarioRepository.findByUsername(username);
     }
 
     @Override
