@@ -118,7 +118,7 @@
 <div class="container">
     <div class="header">
         <h1>📦 Gestión de Productos</h1>
-        <a th:href="@{/productos/form}" class="btn-nuevo">➕ Nuevo Producto</a>
+        <a th:href="@{/productos/nuevo}" class="btn-nuevo">➕ Nuevo Producto</a>
     </div>
     <div class="nav">
         <a th:href="@{/index}">🏠 Inicio</a>
@@ -136,8 +136,8 @@
             </thead>
             <tbody>
             <tr th:each="producto : ${productos}">
-                <td th:text="${producto.id}">1</td>
-                <td th:text="${producto.nombre}">Laptop</td>
+                <td th:text="${producto.codigoProducto}">1</td>
+                <td th:text="${producto.nombreProducto}">Laptop</td>
                 <td th:text="${producto.precio}">Q5000</td>
                 <td th:text="${producto.stock}">10</td>
                 <td class="actions">

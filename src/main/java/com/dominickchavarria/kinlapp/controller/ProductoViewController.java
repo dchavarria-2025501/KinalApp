@@ -33,6 +33,6 @@ public class ProductoViewController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("producto") Producto producto) {
         productoService.guardar(producto);
-        return "redirect:/vista/productos";
+        return "redirect:/productos";
     }
 }
