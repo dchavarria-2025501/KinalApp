@@ -20,15 +20,35 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String procesarLogin(@RequestParam String username, @RequestParam String password, Model model){
+    public String procesarLogin(@RequestParam String username,
+                                @RequestParam String password,
+                                Model model){
         Optional<Usuario> usuarioOpt = usuarioService.buscarPorUsername(username);
-        if (usuarioOpt.isPresent()) {Usuario usuario = usuarioOpt.get();
-            if (usuario.getPassword().equals(password)
-                    && usuario.getEstado() == 1L) {
+
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            if (usuario.getPassword().equals(password) && usuario.getEstado() == 1L) {
                 return "redirect:/";
+            } else {
+                model.addAttribute("error", "Contraseña incorrecta o usuario inactivo");
+                return "login";
+            }
+        } else {
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setUsername(username);
+            nuevoUsuario.setPassword(password);
+            nuevoUsuario.setEmail(username + "@kinlapp.com");
+            nuevoUsuario.setRol("USER");
+            nuevoUsuario.setEstado(1L);
+
+            try {
+                usuarioService.guardar(nuevoUsuario);
+                model.addAttribute("mensaje", "¡Usuario creado exitosamente! Bienvenido/a " + username);
+                return "redirect:/";
+            } catch (Exception e) {
+                model.addAttribute("error", "Error al crear usuario: " + e.getMessage());
+                return "login";
             }
         }
-        model.addAttribute("error", "Usuario o contraseña incorrectos");
-        return "login";
     }
 }

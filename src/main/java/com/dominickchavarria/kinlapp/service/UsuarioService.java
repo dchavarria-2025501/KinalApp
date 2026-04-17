@@ -68,6 +68,10 @@ public class UsuarioService implements IUsuarioService{
         return usuarioRepository.findByUsername(username);
     }
 
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public boolean existePorId(Long codigoUsuario){
