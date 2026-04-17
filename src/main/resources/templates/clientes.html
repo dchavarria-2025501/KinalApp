@@ -3,160 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <title>Kinal App - Clientes</title>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+
+        body{
+            font-family: Arial;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            padding:20px;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease;
+
+        .container{
+            background:white;
+            padding:25px;
+            border-radius:15px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
         }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+
+        th,td{
+            padding:10px;
+            border-bottom:1px solid #ccc;
         }
-        .header h1 { font-size: 1.8em; }
-        .btn-nuevo {
-            background: white;
-            color: #667eea;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s;
+
+        th{
+            background:#667eea;
+            color:white;
         }
-        .btn-nuevo:hover { background: #f0f0f0; transform: scale(1.05); }
-        .nav {
-            background: #f8f9fa;
-            padding: 12px 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #ddd;
+
+        .btn{
+            padding:6px 12px;
+            border-radius:6px;
+            border:none;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
         }
-        .nav a {
-            color: #667eea;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
+
+        .editar{
+            background:orange;
         }
-        .nav a:hover { background: #667eea; color: white; }
-        .content { padding: 30px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        .eliminar{
+            background:red;
         }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+
+        .nuevo{
+            background:#667eea;
+            padding:10px 15px;
+            margin-bottom:10px;
+            display:inline-block;
+            text-decoration:none;
+            color:white;
         }
-        th { background: #667eea; color: white; }
-        tr:hover { background: #f5f5f5; }
-        .actions { display: flex; gap: 10px; }
-        .btn-editar, .btn-eliminar {
-            padding: 5px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s;
+
+        .mensaje{
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:#ffc107;
+            padding:12px 18px;
+            border-radius:8px;
+            font-weight:bold;
         }
-        .btn-editar {
-            background: #ffc107;
-            color: #333;
-        }
-        .btn-editar:hover { background: #e0a800; transform: scale(1.05); }
-        .btn-eliminar {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-eliminar:hover { background: #c82333; transform: scale(1.05); }
-        .mensaje-advertencia {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ffc107;
-            color: #333;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+
     </style>
+
 </head>
+
 <body>
+
 <div class="container">
-    <div class="header">
-        <h1>👤 Gestión de Clientes</h1>
-        <a th:href="@{/clientes/form}" class="btn-nuevo">➕ Nuevo Cliente</a>
-    </div>
-    <div class="nav">
-        <a th:href="@{/index}">🏠 Inicio</a>
-        <a th:href="@{/usuarios}">👥 Usuarios</a>
-        <a th:href="@{/clientes}">👤 Clientes</a>
-        <a th:href="@{/productos}">📦 Productos</a>
-        <a th:href="@{/ventas}">💰 Ventas</a>
-        <a th:href="@{/detalleVentas}">📋 Detalle Ventas</a>
-    </div>
-    <div class="content">
-        <h2>Listado de Clientes</h2>
-        <table>
-            <thead>
-            <tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="cliente : ${clientes}">
-                <td th:text="${cliente.id}">1</td>
-                <td th:text="${cliente.nombre}">Carlos Gómez</td>
-                <td th:text="${cliente.telefono}">12345678</td>
-                <td th:text="${cliente.email}">carlos@mail.com</td>
-                <td class="actions">
-                    <button class="btn-editar" th:onclick="mostrarAdvertencia('Editar', 'cliente', ${cliente.nombre})">✏️ Editar</button>
-                    <button class="btn-eliminar" th:onclick="mostrarAdvertencia('Eliminar', 'cliente', ${cliente.nombre})">🗑️ Eliminar</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
+    <h1>Gestión de Clientes</h1>
+
+    <a th:href="@{/clientes/nuevo}" class="nuevo">
+        ➕ Nuevo Cliente
+    </a>
+
+    <a th:href="@{/}" class="btn-regresar">
+        ⬅️ Regresar
+    </a>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>DPI</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="cliente : ${clientes}">
+
+            <td th:text="${cliente.DPICliente}"></td>
+
+            <td th:text="${cliente.nombreCliente}"></td>
+
+            <td th:text="${cliente.apellidoCliente}"></td>
+
+            <td th:text="${cliente.direccion}"></td>
+
+            <td th:text="${cliente.estado}"></td>
+
+            <td>
+
+                <button
+                        class="btn editar"
+                        onclick="mostrarAdvertencia('Editar')">
+
+                    ✏️ Editar
+
+                </button>
+
+                <button
+                        class="btn eliminar"
+                        onclick="mostrarAdvertencia('Eliminar')">
+
+                    🗑️ Eliminar
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
 </div>
+
 <script>
-    function mostrarAdvertencia(accion, entidad, nombre) {
-        const mensaje = document.createElement('div');
-        mensaje.className = 'mensaje-advertencia';
-        mensaje.innerHTML = `⚠️ ${accion} no disponible | La función de ${accion.toLowerCase()} para ${entidad} "${nombre}" estará disponible próximamente.`;
-        document.body.appendChild(mensaje);
-        setTimeout(() => { mensaje.remove(); }, 3000);
+
+    function mostrarAdvertencia(accion){
+
+    const mensaje = document.createElement("div");
+
+    mensaje.className="mensaje";
+
+    mensaje.innerHTML =
+    "⚠️ La función de "
+    + accion +
+    " aún no está disponible.";
+
+    document.body.appendChild(mensaje);
+
+    setTimeout(()=>{
+    mensaje.remove();
+    },3000);
+
     }
+
 </script>
+
 </body>
 </html>

@@ -1,102 +1,124 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="UTF-8">
-    <title>Kinal App - Formulario Cliente</title>
+    <title>Formulario Cliente</title>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            height: 100vh;
         }
+
         .form-container {
             background: white;
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: fadeIn 0.5s ease;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h2 {
-            color: #667eea;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
+
         input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
+            padding: 10px;
+            margin-top: 10px;
         }
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        button, .btn-cancelar {
-            flex: 1;
-            padding: 12px;
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background: #667eea;
+            color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
             font-weight: bold;
-            cursor: pointer;
+        }
+
+        .cancelar {
+            background: gray;
+            display: block;
             text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            color: white;
             text-decoration: none;
-            transition: transform 0.2s;
+            border-radius: 8px;
         }
-        .btn-guardar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .btn-cancelar {
-            background: #6c757d;
-            color: white;
-            display: inline-block;
-            line-height: 42px;
-        }
-        .btn-guardar:hover, .btn-cancelar:hover { opacity: 0.9; transform: scale(1.02); }
+
     </style>
+
 </head>
+
 <body>
+
 <div class="form-container">
-    <h2 th:text="${cliente.id} ? '✏️ Editar Cliente' : '➕ Nuevo Cliente'">Formulario</h2>
-    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
-        <input type="hidden" th:field="*{id}">
-        <label>Nombre completo:</label>
-        <input type="text" th:field="*{nombre}" required>
-        <label>Teléfono:</label>
-        <input type="text" th:field="*{telefono}" required>
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" required>
-        <div class="buttons">
-            <button type="submit" class="btn-guardar">💾 Guardar</button>
-            <a th:href="@{/clientes}" class="btn-cancelar">❌ Cancelar</a>
-        </div>
+
+    <h2 th:text="${cliente.DPICliente} ? 'Editar Cliente' : 'Nuevo Cliente'"></h2>
+
+    <form th:action="@{/clientes/guardar}"
+          th:object="${cliente}"
+          method="post">
+
+        <!-- DPI -->
+
+        <label>DPI:</label>
+
+        <input type="text"
+               th:field="*{DPICliente}"
+               required>
+
+        <!-- Nombre -->
+
+        <label>Nombre:</label>
+
+        <input type="text"
+               th:field="*{nombreCliente}"
+               required>
+
+        <!-- Apellido -->
+
+        <label>Apellido:</label>
+
+        <input type="text"
+               th:field="*{apellidoCliente}"
+               required>
+
+        <!-- Dirección -->
+
+        <label>Dirección:</label>
+
+        <input type="text"
+               th:field="*{direccion}"
+               required>
+
+        <!-- Estado -->
+
+        <label>Estado:</label>
+
+        <input type="number"
+               th:field="*{estado}"
+               required>
+
+        <button type="submit">
+            Guardar
+        </button>
+
+        <a th:href="@{/clientes}"
+           class="cancelar">
+
+            Cancelar
+
+        </a>
+
     </form>
+
 </div>
+
 </body>
 </html>

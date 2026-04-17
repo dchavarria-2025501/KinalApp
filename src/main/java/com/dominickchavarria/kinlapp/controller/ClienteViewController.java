@@ -35,6 +35,6 @@ public class ClienteViewController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("cliente") Cliente cliente) {
         clienteService.guardar(cliente);
-        return "redirect:/vista/clientes";
+        return "redirect:/clientes";
     }
 }
