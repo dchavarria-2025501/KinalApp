@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/vista/productos")
+@RequestMapping("/productos")
 public class ProductoViewController {
 
     private final IProductoService productoService;

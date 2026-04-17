@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 //@RestController = @Controller + @RequestBody
-@RequestMapping("/clientes")
+@RequestMapping("/api/clientes")
 //Todas las rutas de este controlador deben de empezar por /clientes
 public class ClienteController {
     //Inyectamos el SERVICIO y NO el repositorio

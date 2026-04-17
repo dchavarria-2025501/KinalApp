@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/vista/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioViewController {
 
     private final IUsuarioService usuarioService;
@@ -31,6 +31,6 @@ public class UsuarioViewController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("usuario") Usuario usuario) {
         usuarioService.guardar(usuario);
-        return "redirect:/vista/usuarios";
+        return "redirect:/usuarios";
     }
 }

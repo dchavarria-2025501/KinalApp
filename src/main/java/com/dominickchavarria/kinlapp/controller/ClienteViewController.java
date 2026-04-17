@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/vista/clientes")
+@RequestMapping("/clientes")
 public class ClienteViewController {
 
     private final IClienteService clienteService;

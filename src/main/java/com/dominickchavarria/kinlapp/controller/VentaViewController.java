@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/vista/ventas")
+@RequestMapping("/ventas")
 public class VentaViewController {
 
     private final IVentaService ventaService;

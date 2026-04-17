@@ -1,100 +1,104 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Venta - Sistema de Gestión</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Kinal App - Formulario Venta</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        button, .btn-cancelar {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .btn-guardar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-cancelar {
+            background: #6c757d;
+            color: white;
+            display: inline-block;
+            line-height: 42px;
+        }
+        .btn-guardar:hover, .btn-cancelar:hover { opacity: 0.9; transform: scale(1.02); }
+    </style>
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="logo">🏪 SistemaGestión</a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">📊 Dashboard</a>
-            <a href="clientes.html" class="nav-link">👥 Clientes</a>
-            <a href="productos.html" class="nav-link">📦 Productos</a>
-            <a href="ventas.html" class="nav-link">💰 Ventas</a>
-            <a href="usuarios.html" class="nav-link">👤 Usuarios</a>
+<div class="form-container">
+    <h2 th:text="${venta.id} ? '✏️ Editar Venta' : '➕ Nueva Venta'">Formulario</h2>
+    <form th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <label>Cliente:</label>
+        <select th:field="*{clienteId}" required>
+            <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+        </select>
+        <label>Fecha:</label>
+        <input type="date" th:field="*{fecha}" required>
+        <label>Total:</label>
+        <input type="number" step="0.01" th:field="*{total}" required>
+        <div class="buttons">
+            <button type="submit" class="btn-guardar">💾 Guardar</button>
+            <a th:href="@{/ventas}" class="btn-cancelar">❌ Cancelar</a>
         </div>
-    </div>
-</nav>
-
-<div class="container">
-    <a href="ventas.html" class="back-button">← Regresar a Ventas</a>
-
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">💰 Registrar Nueva Venta</h2>
-        </div>
-
-        <form id="ventaForm" onsubmit="showSuccess(event)">
-            <div class="form-group">
-                <label>Cliente *</label>
-                <select required>
-                    <option value="">Seleccionar cliente</option>
-                    <option>María García</option>
-                    <option>Juan Pérez</option>
-                    <option>Ana López</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Producto *</label>
-                <select required>
-                    <option value="">Seleccionar producto</option>
-                    <option>Laptop Pro - $1,299</option>
-                    <option>Mouse Inalámbrico - $29</option>
-                    <option>Teclado Mecánico - $89</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Cantidad *</label>
-                <input type="number" required placeholder="1">
-            </div>
-
-            <div class="form-group">
-                <label>Método de Pago</label>
-                <select>
-                    <option>Efectivo</option>
-                    <option>Tarjeta de Crédito</option>
-                    <option>Transferencia</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Observaciones</label>
-                <textarea rows="3" placeholder="Notas adicionales..."></textarea>
-            </div>
-
-            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
-                <button type="button" class="btn btn-secondary" onclick="location.href='ventas.html'">Cancelar</button>
-                <button type="submit" class="btn btn-primary">💾 Registrar Venta</button>
-            </div>
-        </form>
-    </div>
+    </form>
 </div>
-
-<div id="successModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-icon">✅</div>
-        <h2 class="modal-title">¡Venta registrada!</h2>
-        <p class="modal-text">La venta ha sido registrada exitosamente (demostración).</p>
-        <div class="modal-buttons">
-            <button class="btn btn-primary" onclick="redirectToVentas()">Aceptar</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    function showSuccess(event) {
-        event.preventDefault();
-        document.getElementById('successModal').classList.add('show');
-    }
-    function redirectToVentas() {
-        window.location.href = 'ventas.html';
-    }
-</script>
 </body>
 </html>
