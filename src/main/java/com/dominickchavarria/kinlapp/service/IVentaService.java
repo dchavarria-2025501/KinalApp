@@ -1,5 +1,6 @@
 package com.dominickchavarria.kinlapp.service;
 
+import com.dominickchavarria.kinlapp.entity.Cliente;
 import com.dominickchavarria.kinlapp.entity.Venta;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface IVentaService{
     void eliminar(Long codigoVenta);
 
     boolean existePorId(Long codigoVenta);
+
+    List<Cliente> listarClientes();
 }

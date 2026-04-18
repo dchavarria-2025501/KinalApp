@@ -1,7 +1,10 @@
 package com.dominickchavarria.kinlapp.service;
 
+import com.dominickchavarria.kinlapp.entity.Cliente;
 import com.dominickchavarria.kinlapp.entity.Venta;
+import com.dominickchavarria.kinlapp.repository.ClienteRepository;
 import com.dominickchavarria.kinlapp.repository.VentaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,4 +71,12 @@ public class VentaService implements IVentaService{
     public boolean existePorId(Long codigoVenta){
         return ventaRepository.existsById(codigoVenta);
     }
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+    @Override
+    public List<Cliente> listarClientes() {
+        return clienteRepository.findAll();
+    }
+
 }

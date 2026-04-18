@@ -118,7 +118,8 @@
 <div class="container">
     <div class="header">
         <h1>💰 Gestión de Ventas</h1>
-        <a th:href="@{/ventas/form}" class="btn-nuevo">➕ Nueva Venta</a>
+        <a th:href="@{/ventas/nuevo}" class="btn-nuevo">➕ Nueva Venta</a>
+        <a th:href="@{/}" class="btn-regresar">⬅️ Regresar</a>
     </div>
     <div class="nav">
         <a th:href="@{/index}">🏠 Inicio</a>
@@ -136,9 +137,9 @@
             </thead>
             <tbody>
             <tr th:each="venta : ${ventas}">
-                <td th:text="${venta.id}">1</td>
-                <td th:text="${venta.clienteNombre}">Carlos Gómez</td>
-                <td th:text="${venta.fecha}">2024-01-15</td>
+                <td th:text="${venta.codigoVenta}">1</td>
+                <td th:text="${venta.nombreCliente}">Carlos Gómez</td>
+                <td th:text="${venta.fechaVenta}">2024-01-15</td>
                 <td th:text="${venta.total}">Q1500</td>
                 <td class="actions">
                     <button class="btn-editar" th:onclick="mostrarAdvertencia('Editar', 'venta', ${venta.id})">✏️ Editar</button>

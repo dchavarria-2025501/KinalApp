@@ -23,14 +23,17 @@ public class VentaViewController {
     }
 
     @GetMapping("/nuevo")
-    public String nuevo(Model model) {
-        model.addAttribute("venta", new Venta());
+    public String nuevo(Model model) {model.addAttribute("venta", new Venta());
+        model.addAttribute(
+                "clientes",
+                ventaService.listarClientes()
+        );
         return "venta-form";
     }
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("venta") Venta venta) {
         ventaService.guardar(venta);
-        return "redirect:/vista/ventas";
+        return "redirect:/ventas";
     }
 }
