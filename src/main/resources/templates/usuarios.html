@@ -3,124 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <title>KinalApp - Usuarios</title>
-
     <style>
-
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #dccab0;
             padding: 30px;
         }
 
         .container {
+            max-width: 1100px;
+            margin: 0 auto;
             background: white;
-            padding: 25px;
+            padding: 30px;
+            border: 3px solid #8b5e3c;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 10px 10px 0px #8b5e3c;
         }
 
         h1 {
-            color: #667eea;
-            margin-bottom: 15px;
+            color: #5d4037;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #d4cfc1;
         }
 
         .buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-nuevo {
-            background: green;
+            background-color: #5d4037;
             color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
+            padding: 10px 20px;
+            border: 2px solid #3e2723;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-nuevo:hover {
+            background-color: #8b5e3c;
         }
 
         .btn-regresar {
-            background: #6c757d;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
+            background-color: #f4f1ea;
+            color: #5d4037;
+            padding: 10px 20px;
+            border: 2px solid #8b5e3c;
+            border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
+            font-size: 14px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
         }
 
         th {
-            background: #667eea;
+            background-color: #8b5e3c;
             color: white;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
         }
 
         th, td {
-            padding: 10px;
+            padding: 14px;
             text-align: center;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #d4cfc1;
         }
 
         tr:hover {
-            background: #f2f2f2;
+            background-color: #fcfaf7;
         }
 
         .btn-editar {
-            background: orange;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
+            background-color: #f4b400;
+            color: #3e2723;
+            border: 1px solid #b48600;
+            padding: 8px 12px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.3s;
         }
 
         .btn-eliminar {
-            background: red;
+            background-color: #c62828;
             color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
+            border: 1px solid #8e0000;
+            padding: 8px 12px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.3s;
         }
 
+        .btn-editar:hover, .btn-eliminar:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
     </style>
-
 </head>
-
 <body>
-
 <div class="container">
-
     <div class="top-bar">
-
         <h1>Gestión de Usuarios</h1>
-
         <div class="buttons">
-
-            <a th:href="@{/}" class="btn-regresar">
-                ⬅️ Regresar
-            </a>
-
-            <a th:href="@{/usuarios/nuevo}" class="btn-nuevo">
-                ➕ Nuevo Usuario
-            </a>
-
+            <a th:href="@{/}" class="btn-regresar">Regresar</a>
+            <a th:href="@{/usuarios/nuevo}" class="btn-nuevo">Nuevo Usuario</a>
         </div>
 
     </div>
-
     <table>
-
         <thead>
         <tr>
             <th>ID</th>
@@ -131,42 +141,25 @@
             <th>Acciones</th>
         </tr>
         </thead>
-
         <tbody>
 
         <tr th:each="usuario : ${usuarios}">
-
             <td th:text="${usuario.codigoUsuario}"></td>
-
             <td th:text="${usuario.username}"></td>
-
             <td th:text="${usuario.email}"></td>
-
             <td th:text="${usuario.rol}"></td>
-
             <td th:text="${usuario.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
-
             <td>
-
                 <button class="btn-editar"
-                        onclick="alert('Editar deshabilitado')">
-                    ✏️ Editar
+                        onclick="alert('Editar deshabilitado')">Editar
                 </button>
-
                 <button class="btn-eliminar"
-                        onclick="alert('Eliminar deshabilitado')">
-                    🗑️ Eliminar
+                        onclick="alert('Eliminar deshabilitado')">Eliminar
                 </button>
-
             </td>
-
         </tr>
-
         </tbody>
-
     </table>
-
 </div>
-
 </body>
 </html>

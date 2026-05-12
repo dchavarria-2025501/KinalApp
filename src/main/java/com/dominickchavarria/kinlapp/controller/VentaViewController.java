@@ -23,11 +23,10 @@ public class VentaViewController {
     }
 
     @GetMapping("/nuevo")
-    public String nuevo(Model model) {model.addAttribute("venta", new Venta());
-        model.addAttribute(
-                "clientes",
-                ventaService.listarClientes()
-        );
+    public String nuevo(Model model) {
+        model.addAttribute("venta", new Venta());
+        model.addAttribute("clientes", ventaService.listarClientes());
+        model.addAttribute("usuarios", ventaService.listarUsuarios());
         return "venta-form";
     }
 

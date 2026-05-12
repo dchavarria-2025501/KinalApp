@@ -2,96 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Kinal App - Clientes</title>
-
+    <title>KinalApp - Clientes</title>
     <style>
-
-        body{
-            font-family: Arial;
-            background: linear-gradient(135deg,#667eea,#764ba2);
-            padding:20px;
-        }
-
-        .container{
-            background:white;
-            padding:25px;
-            border-radius:15px;
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-            margin-top:20px;
-        }
-
-        th,td{
-            padding:10px;
-            border-bottom:1px solid #ccc;
-        }
-
-        th{
-            background:#667eea;
-            color:white;
-        }
-
-        .btn{
-            padding:6px 12px;
-            border-radius:6px;
-            border:none;
-            color:white;
-            font-weight:bold;
-            cursor:pointer;
-        }
-
-        .editar{
-            background:orange;
-        }
-
-        .eliminar{
-            background:red;
-        }
-
-        .nuevo{
-            background:#667eea;
-            padding:10px 15px;
-            margin-bottom:10px;
-            display:inline-block;
-            text-decoration:none;
-            color:white;
-        }
-
-        .mensaje{
-            position:fixed;
-            top:20px;
-            right:20px;
-            background:#ffc107;
-            padding:12px 18px;
-            border-radius:8px;
-            font-weight:bold;
-        }
-
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #dccab0; padding: 30px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border: 3px solid #8b5e3c; border-radius: 12px; box-shadow: 10px 10px 0px #8b5e3c; }
+        h1 { color: #5d4037; text-transform: uppercase; margin-bottom: 20px; font-size: 24px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px dashed #d4cfc1; }
+        .buttons { display: flex; gap: 12px; }
+        .btn-nuevo { background-color: #5d4037; color: white; padding: 10px 20px; border: 2px solid #3e2723; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        .btn-nuevo:hover { background-color: #8b5e3c; }
+        .btn-regresar { background-color: #f4f1ea; color: #5d4037; padding: 10px 20px; border: 2px solid #8b5e3c; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background-color: #8b5e3c; color: white; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; padding: 14px; }
+        td { padding: 14px; text-align: center; border-bottom: 1px solid #d4cfc1; }
+        tr:hover { background-color: #fcfaf7; }
+        .btn-editar { background-color: #f4b400; color: #3e2723; border: 1px solid #b48600; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-eliminar { background-color: #c62828; color: white; border: 1px solid #8e0000; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
     </style>
-
 </head>
-
 <body>
-
 <div class="container">
-
-    <h1>Gestión de Clientes</h1>
-
-    <a th:href="@{/clientes/nuevo}" class="nuevo">
-        ➕ Nuevo Cliente
-    </a>
-
-    <a th:href="@{/}" class="btn-regresar">
-        ⬅️ Regresar
-    </a>
-
+    <div class="top-bar">
+        <h1>Gestión de Clientes</h1>
+        <div class="buttons">
+            <a th:href="@{/}" class="btn-regresar">Regresar</a>
+            <a th:href="@{/clientes/nuevo}" class="btn-nuevo">Nuevo Cliente</a>
+        </div>
+    </div>
     <table>
-
         <thead>
-
         <tr>
             <th>DPI</th>
             <th>Nombre</th>
@@ -100,73 +39,21 @@
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
-
         </thead>
-
         <tbody>
-
         <tr th:each="cliente : ${clientes}">
-
             <td th:text="${cliente.DPICliente}"></td>
-
             <td th:text="${cliente.nombreCliente}"></td>
-
             <td th:text="${cliente.apellidoCliente}"></td>
-
             <td th:text="${cliente.direccion}"></td>
-
-            <td th:text="${cliente.estado}"></td>
-
+            <td th:text="${cliente.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
             <td>
-
-                <button
-                        class="btn editar"
-                        onclick="mostrarAdvertencia('Editar')">
-
-                    ✏️ Editar
-
-                </button>
-
-                <button
-                        class="btn eliminar"
-                        onclick="mostrarAdvertencia('Eliminar')">
-
-                    🗑️ Eliminar
-
-                </button>
-
+                <button class="btn-editar" onclick="alert('Funcionalidad de edición pendiente en controller')">Editar</button>
+                <button class="btn-eliminar" onclick="alert('Funcionalidad de eliminación pendiente en controller')">Eliminar</button>
             </td>
-
         </tr>
-
         </tbody>
-
     </table>
-
 </div>
-
-<script>
-
-    function mostrarAdvertencia(accion){
-
-    const mensaje = document.createElement("div");
-
-    mensaje.className="mensaje";
-
-    mensaje.innerHTML =
-    "⚠️ La función de "
-    + accion +
-    " aún no está disponible.";
-
-    document.body.appendChild(mensaje);
-
-    setTimeout(()=>{
-    mensaje.remove();
-    },3000);
-
-    }
-
-</script>
-
 </body>
 </html>

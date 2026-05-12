@@ -1,7 +1,11 @@
 package com.dominickchavarria.kinlapp.service;
 
 import com.dominickchavarria.kinlapp.entity.DetalleVenta;
+import com.dominickchavarria.kinlapp.entity.Producto;
+import com.dominickchavarria.kinlapp.entity.Venta;
 import com.dominickchavarria.kinlapp.repository.DetalleVentaRepository;
+import com.dominickchavarria.kinlapp.repository.ProductoRepository;
+import com.dominickchavarria.kinlapp.repository.VentaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +17,15 @@ import java.util.Optional;
 @Transactional
 public class DetalleVentaService implements IDetalleVentaService {
     private final DetalleVentaRepository detalleVentaRepository;
+    private final VentaRepository ventaRepository;
+    private final ProductoRepository productoRepository;
 
-    public DetalleVentaService(DetalleVentaRepository detalleVentaRepository){
+    public DetalleVentaService(DetalleVentaRepository detalleVentaRepository,
+                               VentaRepository ventaRepository,
+                               ProductoRepository productoRepository) {
         this.detalleVentaRepository = detalleVentaRepository;
+        this.ventaRepository = ventaRepository;
+        this.productoRepository = productoRepository;
     }
 
     @Override
@@ -50,7 +60,7 @@ public class DetalleVentaService implements IDetalleVentaService {
             throw new RuntimeException("El detalle de venta no existe");
         }
         detalleVenta.setCodigoDetalleVenta(codigoDetalleVenta);
-        return  detalleVentaRepository.save(detalleVenta);
+        return detalleVentaRepository.save(detalleVenta);
     }
 
     @Override
@@ -64,5 +74,15 @@ public class DetalleVentaService implements IDetalleVentaService {
     @Override
     public boolean existePorId(Long codigoDetalleVenta){
         return detalleVentaRepository.existsById(codigoDetalleVenta);
+    }
+
+    @Override
+    public List<Venta> listarVentas() {
+        return ventaRepository.findAll();
+    }
+
+    @Override
+    public List<Producto> listarProductos() {
+        return productoRepository.findAll();
     }
 }

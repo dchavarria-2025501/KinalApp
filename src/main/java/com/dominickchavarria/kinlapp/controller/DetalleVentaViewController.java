@@ -25,12 +25,14 @@ public class DetalleVentaViewController {
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("detalleVenta", new DetalleVenta());
+        model.addAttribute("ventas", detalleVentaService.listarVentas());
+        model.addAttribute("productos", detalleVentaService.listarProductos());
         return "detalleVenta-form";
     }
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("detalleVenta") DetalleVenta detalleVenta) {
         detalleVentaService.guardar(detalleVenta);
-        return "redirect:/vista/detalleVentas";
+        return "redirect:/detalle_ventas";
     }
 }

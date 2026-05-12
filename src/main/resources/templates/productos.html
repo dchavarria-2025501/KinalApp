@@ -2,162 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Kinal App - Productos</title>
+    <title>KinalApp - Productos</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .header h1 { font-size: 1.8em; }
-        .btn-nuevo {
-            background: white;
-            color: #667eea;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .btn-nuevo:hover { background: #f0f0f0; transform: scale(1.05); }
-        .nav {
-            background: #f8f9fa;
-            padding: 12px 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #ddd;
-        }
-        .nav a {
-            color: #667eea;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        .nav a:hover { background: #667eea; color: white; }
-        .content { padding: 30px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th { background: #667eea; color: white; }
-        tr:hover { background: #f5f5f5; }
-        .actions { display: flex; gap: 10px; }
-        .btn-editar, .btn-eliminar {
-            padding: 5px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s;
-        }
-        .btn-editar {
-            background: #ffc107;
-            color: #333;
-        }
-        .btn-editar:hover { background: #e0a800; transform: scale(1.05); }
-        .btn-eliminar {
-            background: #dc3545;
-            color: white;
-        }
-        .btn-eliminar:hover { background: #c82333; transform: scale(1.05); }
-        .mensaje-advertencia {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ffc107;
-            color: #333;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #dccab0; padding: 30px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border: 3px solid #8b5e3c; border-radius: 12px; box-shadow: 10px 10px 0px #8b5e3c; }
+        h1 { color: #5d4037; text-transform: uppercase; margin-bottom: 20px; font-size: 24px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px dashed #d4cfc1; }
+        .buttons { display: flex; gap: 12px; }
+        .btn-nuevo { background-color: #5d4037; color: white; padding: 10px 20px; border: 2px solid #3e2723; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        .btn-nuevo:hover { background-color: #8b5e3c; }
+        .btn-regresar { background-color: #f4f1ea; color: #5d4037; padding: 10px 20px; border: 2px solid #8b5e3c; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background-color: #8b5e3c; color: white; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; padding: 14px; }
+        td { padding: 14px; text-align: center; border-bottom: 1px solid #d4cfc1; }
+        tr:hover { background-color: #fcfaf7; }
+        .btn-editar { background-color: #f4b400; color: #3e2723; border: 1px solid #b48600; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-eliminar { background-color: #c62828; color: white; border: 1px solid #8e0000; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <h1>📦 Gestión de Productos</h1>
-        <a th:href="@{/productos/nuevo}" class="btn-nuevo">➕ Nuevo Producto</a>
-        <a th:href="@{/}" class="btn-regresar">⬅️ Regresar</a>
+    <div class="top-bar">
+        <h1>Gestión de Productos</h1>
+        <div class="buttons">
+            <a th:href="@{/}" class="btn-regresar">Regresar</a>
+            <a th:href="@{/productos/nuevo}" class="btn-nuevo">Nuevo Producto</a>
+        </div>
     </div>
-    <div class="nav">
-        <a th:href="@{/index}">🏠 Inicio</a>
-        <a th:href="@{/usuarios}">👥 Usuarios</a>
-        <a th:href="@{/clientes}">👤 Clientes</a>
-        <a th:href="@{/productos}">📦 Productos</a>
-        <a th:href="@{/ventas}">💰 Ventas</a>
-        <a th:href="@{/detalleVentas}">📋 Detalle Ventas</a>
-    </div>
-    <div class="content">
-        <h2>Listado de Productos</h2>
-        <table>
-            <thead>
-            <tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="producto : ${productos}">
-                <td th:text="${producto.codigoProducto}">1</td>
-                <td th:text="${producto.nombreProducto}">Laptop</td>
-                <td th:text="${producto.precio}">Q5000</td>
-                <td th:text="${producto.stock}">10</td>
-                <td class="actions">
-                    <button class="btn-editar" th:onclick="mostrarAdvertencia('Editar', 'producto', ${producto.nombre})">✏️ Editar</button>
-                    <button class="btn-eliminar" th:onclick="mostrarAdvertencia('Eliminar', 'producto', ${producto.nombre})">🗑️ Eliminar</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${productos}">
+            <td th:text="${producto.codigoProducto}"></td>
+            <td th:text="${producto.nombreProducto}"></td>
+            <td th:text="'Q' + ${#numbers.formatDecimal(producto.precio, 1, 2)}"></td>
+            <td th:text="${producto.stock}"></td>
+            <td th:text="${producto.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
+            <td>
+                <button class="btn-editar" onclick="alert('Edición pendiente')">Editar</button>
+                <button class="btn-eliminar" onclick="alert('Eliminación pendiente')">Eliminar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<script>
-    function mostrarAdvertencia(accion, entidad, nombre) {
-        const mensaje = document.createElement('div');
-        mensaje.className = 'mensaje-advertencia';
-        mensaje.innerHTML = `⚠️ ${accion} no disponible | La función de ${accion.toLowerCase()} para ${entidad} "${nombre}" estará disponible próximamente.`;
-        document.body.appendChild(mensaje);
-        setTimeout(() => { mensaje.remove(); }, 3000);
-    }
-</script>
 </body>
 </html>

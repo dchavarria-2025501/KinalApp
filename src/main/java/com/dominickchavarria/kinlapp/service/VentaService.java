@@ -1,9 +1,12 @@
 package com.dominickchavarria.kinlapp.service;
 
 import com.dominickchavarria.kinlapp.entity.Cliente;
+import com.dominickchavarria.kinlapp.entity.Usuario;
 import com.dominickchavarria.kinlapp.entity.Venta;
 import com.dominickchavarria.kinlapp.repository.ClienteRepository;
+import com.dominickchavarria.kinlapp.repository.UsuarioRepository;
 import com.dominickchavarria.kinlapp.repository.VentaRepository;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,4 +82,10 @@ public class VentaService implements IVentaService{
         return clienteRepository.findAll();
     }
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Override
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
+    }
 }

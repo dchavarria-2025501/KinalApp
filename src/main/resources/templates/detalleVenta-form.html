@@ -2,103 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Kinal App - Formulario Detalle Venta</title>
+    <title>Kinal App - Formulario Detalle</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .form-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        h2 {
-            color: #667eea;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        button, .btn-cancelar {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .btn-guardar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .btn-cancelar {
-            background: #6c757d;
-            color: white;
-            display: inline-block;
-            line-height: 42px;
-        }
-        .btn-guardar:hover, .btn-cancelar:hover { opacity: 0.9; transform: scale(1.02); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #dccab0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .form-container { background: #ffffff; border: 3px solid #8b5e3c; border-radius: 12px; padding: 40px; width: 90%; max-width: 500px; box-shadow: 10px 10px 0px #8b5e3c; }
+        h2 { color: #5d4037; text-align: center; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #5d4037; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #d4cfc1; border-radius: 4px; background-color: #fafaf8; outline: none; transition: 0.3s; }
+        .buttons { display: flex; gap: 15px; margin-top: 30px; }
+        button, .btn-cancelar { flex: 1; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; text-align: center; text-decoration: none; border-radius: 4px; transition: 0.3s; }
+        .btn-guardar { background-color: #8b5e3c; color: white; border: 2px solid #5d4037; }
+        .btn-cancelar { background-color: #e8dbca; color: #5d4037; border: 2px solid #8b5e3c; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 <div class="form-container">
-    <h2 th:text="${detalleVenta.id} ? '✏️ Editar Detalle Venta' : '➕ Nuevo Detalle Venta'">Formulario</h2>
-    <form th:action="@{/detalleVentas/guardar}" th:object="${detalleVenta}" method="post">
-        <input type="hidden" th:field="*{id}">
-        <label>Venta:</label>
-        <select th:field="*{ventaId}" required>
-            <option th:each="venta : ${ventas}" th:value="${venta.id}" th:text="'Venta #' + ${venta.id} + ' - ' + ${venta.clienteNombre}"></option>
+    <h2>Nuevo Detalle de Venta</h2>
+
+    <form th:action="@{/detalle_ventas/guardar}" th:object="${detalleVenta}" method="post">
+
+        <input type="hidden" th:field="*{codigoDetalleVenta}">
+
+        <label>Seleccionar Venta (ID):</label>
+        <select th:field="*{venta}">
+            <option value="" disabled selected>Seleccione la venta</option>
+            <option th:each="v : ${ventas}" th:value="${v.codigoVenta}" th:text="'Venta #' + ${v.codigoVenta}"></option>
         </select>
+
         <label>Producto:</label>
-        <select th:field="*{productoId}" required>
-            <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre} + ' - Q' + ${producto.precio}"></option>
+        <select th:field="*{producto}">
+            <option value="" disabled selected>Seleccione un producto</option>
+            <option th:each="p : ${productos}" th:value="${p.codigoProducto}" th:text="${p.nombreProducto}"></option>
         </select>
+
         <label>Cantidad:</label>
-        <input type="number" th:field="*{cantidad}" required>
+        <input type="number" th:field="*{cantidad}" min="1" required>
+
+        <label>Precio Unitario:</label>
+        <input type="number" th:field="*{precioUnitario}" step="0.01" required>
+
+        <label>Subtotal:</label>
+        <input type="number" th:field="*{subtotal}" step="0.01" required>
+
         <div class="buttons">
-            <button type="submit" class="btn-guardar">💾 Guardar</button>
-            <a th:href="@{/detalleVentas}" class="btn-cancelar">❌ Cancelar</a>
+            <button type="submit" class="btn-guardar">Guardar Detalle</button>
+            <a th:href="@{/detalle_ventas}" class="btn-cancelar">Cancelar</a>
         </div>
     </form>
 </div>
