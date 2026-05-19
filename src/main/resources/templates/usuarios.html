@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>KinalApp - Usuarios</title>
@@ -118,6 +119,19 @@
             opacity: 0.8;
             transform: scale(1.05);
         }
+
+        .btn-editar {
+            background-color: #f4b400;
+            color: #3e2723;
+            border: 1px solid #b48600;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -138,7 +152,7 @@
             <th>Email</th>
             <th>Rol</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasRole('ADMIN')">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -149,13 +163,11 @@
             <td th:text="${usuario.email}"></td>
             <td th:text="${usuario.rol}"></td>
             <td th:text="${usuario.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
-            <td>
-                <button class="btn-editar"
-                        onclick="alert('Editar deshabilitado')">Editar
-                </button>
-                <button class="btn-eliminar"
-                        onclick="alert('Eliminar deshabilitado')">Eliminar
-                </button>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/usuarios/editar/{id}(id=${usuario.codigoUsuario})}" class="btn-editar">Editar</a>
+                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.codigoUsuario})}"
+                   class="btn-eliminar"
+                   onclick="return confirm('¿Eliminar este usuario?')">Eliminar</a>
             </td>
         </tr>
         </tbody>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>KinalApp - Clientes</title>
@@ -37,7 +38,7 @@
             <th>Apellido</th>
             <th>Dirección</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasRole('ADMIN')">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -47,9 +48,11 @@
             <td th:text="${cliente.apellidoCliente}"></td>
             <td th:text="${cliente.direccion}"></td>
             <td th:text="${cliente.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
-            <td>
-                <button class="btn-editar" onclick="alert('Funcionalidad de edición pendiente en controller')">Editar</button>
-                <button class="btn-eliminar" onclick="alert('Funcionalidad de eliminación pendiente en controller')">Eliminar</button>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/clientes/editar/{dpi}(dpi=${cliente.DPICliente})}" class="btn-editar">Editar</a>
+                <a th:href="@{/clientes/eliminar/{dpi}(dpi=${cliente.DPICliente})}"
+                   class="btn-eliminar"
+                   onclick="return confirm('¿Eliminar este cliente?')">Eliminar</a>
             </td>
         </tr>
         </tbody>

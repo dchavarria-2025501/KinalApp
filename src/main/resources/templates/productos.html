@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>KinalApp - Productos</title>
@@ -37,7 +38,7 @@
             <th>Precio</th>
             <th>Stock</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasRole('ADMIN')">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -47,9 +48,11 @@
             <td th:text="'Q' + ${#numbers.formatDecimal(producto.precio, 1, 2)}"></td>
             <td th:text="${producto.stock}"></td>
             <td th:text="${producto.estado == 1 ? 'Activo' : 'Inactivo'}"></td>
-            <td>
-                <button class="btn-editar" onclick="alert('Edición pendiente')">Editar</button>
-                <button class="btn-eliminar" onclick="alert('Eliminación pendiente')">Eliminar</button>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/productos/editar/{id}(id=${producto.codigoProducto})}" class="btn-editar">Editar</a>
+                <a th:href="@{/productos/eliminar/{id}(id=${producto.codigoProducto})}"
+                   class="btn-eliminar"
+                   onclick="return confirm('¿Eliminar este producto?')">Eliminar</a>
             </td>
         </tr>
         </tbody>

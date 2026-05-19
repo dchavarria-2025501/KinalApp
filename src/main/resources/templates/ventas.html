@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>KinalApp - Ventas</title>
@@ -50,6 +51,13 @@
             <td th:text="${venta.estado == 1 ? 'Finalizada' : 'Anulada'}"></td>
             <td>
                 <button class="btn-detalle" onclick="alert('Ver detalle de venta pendiente')">Ver Detalle</button>
+                    <a th:href="@{/detalle_ventas}" class="btn-detalle">Ver Detalle</a>
+                <span sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/ventas/editar/{id}(id=${venta.codigoVenta})}" class="btn-editar">Editar</a>
+                    <a th:href="@{/ventas/eliminar/{id}(id=${venta.codigoVenta})}"
+                        class="btn-eliminar"
+                onclick="return confirm('¿Eliminar esta venta?')">Eliminar</a>
+                </span>
             </td>
         </tr>
         </tbody>

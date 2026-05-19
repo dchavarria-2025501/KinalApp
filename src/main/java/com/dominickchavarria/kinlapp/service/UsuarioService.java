@@ -3,6 +3,11 @@ package com.dominickchavarria.kinlapp.service;
 import com.dominickchavarria.kinlapp.entity.Usuario;
 import com.dominickchavarria.kinlapp.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -10,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UsuarioService implements IUsuarioService{
+public class UsuarioService implements IUsuarioService, UserDetailsService {
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository){
@@ -70,6 +75,25 @@ public class UsuarioService implements IUsuarioService{
 
     public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
+
+        if (usuario.getEstado() == null || usuario.getEstado() != 1L) {
+            throw new UsernameNotFoundException("Usuario inactivo");
+        }
+
+        String role = "ROLE_" + usuario.getRol().toUpperCase();
+
+        return User.builder()
+                .username(usuario.getUsername())
+                .password(usuario.getPassword())
+                .authorities(new SimpleGrantedAuthority(role))
+                .build();
     }
 
     @Override
