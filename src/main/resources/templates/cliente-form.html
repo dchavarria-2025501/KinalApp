@@ -1,124 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
-    <title>Formulario Cliente</title>
-
+    <title>Kinal App - Formulario Cliente</title>
     <style>
-
-        body {
-            font-family: Arial;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 400px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 10px;
-            width: 100%;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .cancelar {
-            background: gray;
-            display: block;
-            text-align: center;
-            padding: 10px;
-            margin-top: 10px;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #dccab0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .form-container { background: #ffffff; border: 3px solid #8b5e3c; border-radius: 12px; padding: 40px; width: 90%; max-width: 500px; box-shadow: 10px 10px 0px #8b5e3c; }
+        h2 { color: #5d4037; text-align: center; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1px; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #5d4037; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #d4cfc1; border-radius: 4px; background-color: #fafaf8; outline: none; transition: 0.3s; }
+        .buttons { display: flex; gap: 15px; margin-top: 30px; }
+        button, .btn-cancelar { flex: 1; padding: 12px; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; text-align: center; text-decoration: none; border-radius: 4px; transition: 0.3s; }
+        .btn-guardar { background-color: #8b5e3c; color: white; border: 2px solid #5d4037; }
+        .btn-cancelar { background-color: #e8dbca; color: #5d4037; border: 2px solid #8b5e3c; display: flex; align-items: center; justify-content: center; }
     </style>
-
 </head>
-
 <body>
-
 <div class="form-container">
+    <h2 th:text="${cliente.DPICliente} != null ? 'Editar Cliente' : 'Nuevo Cliente'">Formulario</h2>
 
-    <h2 th:text="${cliente.DPICliente} ? 'Editar Cliente' : 'Nuevo Cliente'"></h2>
-
-    <form th:action="@{/clientes/guardar}"
-          th:object="${cliente}"
-          method="post">
-
-        <!-- DPI -->
+    <form th:action="@{/clientes/guardar}" th:object="${cliente}" method="post">
 
         <label>DPI:</label>
-
-        <input type="text"
-               th:field="*{DPICliente}"
-               required>
-
-        <!-- Nombre -->
+        <input type="text" th:field="*{DPICliente}" required th:readonly="${cliente.DPICliente != null}">
 
         <label>Nombre:</label>
-
-        <input type="text"
-               th:field="*{nombreCliente}"
-               required>
-
-        <!-- Apellido -->
+        <input type="text" th:field="*{nombreCliente}" required>
 
         <label>Apellido:</label>
-
-        <input type="text"
-               th:field="*{apellidoCliente}"
-               required>
-
-        <!-- Dirección -->
+        <input type="text" th:field="*{apellidoCliente}" required>
 
         <label>Dirección:</label>
-
-        <input type="text"
-               th:field="*{direccion}"
-               required>
-
-        <!-- Estado -->
+        <input type="text" th:field="*{direccion}" required>
 
         <label>Estado:</label>
+        <select th:field="*{estado}">
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+        </select>
 
-        <input type="number"
-               th:field="*{estado}"
-               required>
-
-        <button type="submit">
-            Guardar
-        </button>
-
-        <a th:href="@{/clientes}"
-           class="cancelar">
-
-            Cancelar
-
-        </a>
-
+        <div class="buttons">
+            <button type="submit" class="btn-guardar">Guardar</button>
+            <a th:href="@{/clientes}" class="btn-cancelar">Cancelar</a>
+        </div>
     </form>
-
 </div>
-
 </body>
 </html>

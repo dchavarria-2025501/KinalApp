@@ -2,6 +2,7 @@ package com.dominickchavarria.kinlapp.service;
 
 import com.dominickchavarria.kinlapp.entity.Cliente;
 import com.dominickchavarria.kinlapp.entity.Venta;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,6 @@ public interface IVentaService{
     boolean existePorId(Long codigoVenta);
 
     List<Cliente> listarClientes();
+
+    @Nullable Object listarUsuarios();
 }

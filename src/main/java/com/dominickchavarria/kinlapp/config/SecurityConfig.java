@@ -1,7 +1,9 @@
 package com.dominickchavarria.kinlapp.config;
 
+import com.dominickchavarria.kinlapp.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -23,6 +25,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                                .requestMatchers("/clientes/editar/**", "/clientes/eliminar/**").hasRole("ADMIN")
+                                .requestMatchers("/productos/editar/**", "/productos/eliminar/**").hasRole("ADMIN")
+                                .requestMatchers("/usuarios/editar/**", "/usuarios/eliminar/**").hasRole("ADMIN")
+                                .requestMatchers("/ventas/editar/**", "/ventas/eliminar/**").hasRole("ADMIN")
+                                .requestMatchers("/detalle_ventas/editar/**", "/detalle_ventas/eliminar/**").hasRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin( form -> form
@@ -37,26 +48,20 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password("12345")
-                .roles("USER")
-                .build();
+        return usuarioService;
+    }
 
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
+    private final UsuarioService usuarioService;
 
-        return new InMemoryUserDetailsManager(user, admin);
+    public SecurityConfig(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
-
 }
 

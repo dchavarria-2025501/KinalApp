@@ -1,11 +1,13 @@
 package com.dominickchavarria.kinlapp.service;
 
 import com.dominickchavarria.kinlapp.entity.DetalleVenta;
-
+import com.dominickchavarria.kinlapp.entity.Producto;
+import com.dominickchavarria.kinlapp.entity.Venta;
 import java.util.List;
 import java.util.Optional;
 
 public interface IDetalleVentaService {
+
     List<DetalleVenta> listarTodos();
 
     DetalleVenta guardar(DetalleVenta detalleVenta);
@@ -19,4 +21,8 @@ public interface IDetalleVentaService {
     void eliminar(Long codigoDetalleVenta);
 
     boolean existePorId(Long codigoDetalleVenta);
+
+    List<Venta> listarVentas();
+
+    List<Producto> listarProductos();
 }
